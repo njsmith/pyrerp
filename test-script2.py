@@ -3,9 +3,7 @@ import scipy.sparse
 
 import os
 import warnings
-warnings.filterwarnings("error", module="^pyrerp")
-del warnings
-del os
+warnings.filterwarnings("error")
 
 a = np.zeros((2, 2))
 b = scipy.sparse.csc_matrix([[10.0, 45.0], [45.0, 285.0]])
