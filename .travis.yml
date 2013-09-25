@@ -1,7 +1,4 @@
 language: python
-virtualenv:
-  # For scipy
-  system_site_packages: true
 python:
   # We rely on the Ubuntu python-scipy package, and that's only
   # available for python 2.7 (and 3.something, but pyrerp doesn't
@@ -10,11 +7,8 @@ python:
 before_install:
   - echo Preinstalled
   - pip freeze
-  - sudo apt-get install -qq python-scipy python-pandas cython
-  - echo Available by apt-get
-  - pip freeze
   # Need something like scipy 0.10, pandas 0.12, not sure about cython (want memoryview support anyway, 0.15 does NOT work, 0.19 does)
-  - pip install --use-mirrors --upgrade coverage cython patsy pandas
+  - pip install -q --use-mirrors --upgrade coverage cython scipy patsy pandas
   - echo Final installation
   - pip freeze
   - which nosetests
