@@ -6,7 +6,7 @@ python:
   - 2.7
 before_install:
   - sudo apt-get -qq build-dep python-scipy
-  - pip install --use-mirrors --upgrade coverage cython scipy patsy pandas
+  - pip install --use-mirrors --upgrade coverage scipy
 install:
   - python setup.py install
 script:
@@ -14,6 +14,8 @@ script:
   - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
   - PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1 nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
   - PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1 python test-script.py || true
+  - PYRERP_FORCE_NO_WARNINGS=1 nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
+  - PYTHONWARNINGS=default nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
   # We change directories to make sure that python won't find the copy
   # of the package inside the source directory.
   # - export PYRERP_TEST_DATA=$PWD/test-data
