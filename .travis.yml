@@ -8,7 +8,7 @@ before_install:
   - sudo apt-get -qq build-dep python-scipy
   - pip install --use-mirrors --upgrade coverage scipy
 install:
-  - python setup.py install
+  - true
 script:
   - python test-script.py
   - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
