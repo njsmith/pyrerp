@@ -30,11 +30,19 @@ script:
   - cd empty
   - INSTALLDIR=$(python -c "import os; import pyrerp; print(os.path.dirname(pyrerp.__file__))")
   - export PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1
+  - echo $INSTALLDIR
   # The --exe is because python sometimes marks all installed modules
   # as executable, so without --exe nosetests will just ignore
   # everything. Baffling, but so it goes.
   - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
-  - coverage report --rcfile=../.coveragerc --show-missing
+  - $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
+  - nosetests --exe --failure-detail --all-modules $INSTALLDIR
+  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
+  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
+  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo
+  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo
+  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
+  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
 notifications:
   email:
     - njs@pobox.com
