@@ -23,6 +23,7 @@ install:
   - python setup.py install
 script:
   - python test-script.py
+  - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
   # We change directories to make sure that python won't find the copy
   # of the package inside the source directory.
   - export PYRERP_TEST_DATA=$PWD/test-data
@@ -34,15 +35,15 @@ script:
   # The --exe is because python sometimes marks all installed modules
   # as executable, so without --exe nosetests will just ignore
   # everything. Baffling, but so it goes.
-  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
-  - $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
-  - nosetests --exe --failure-detail --all-modules $INSTALLDIR
-  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
-  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
-  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo
+  #- coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
+  #- $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR
+  #- nosetests --exe --failure-detail --all-modules $INSTALLDIR
+  #- coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
+  #- nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py
+  #- coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo
   - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo
-  - coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
-  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
+  #- coverage run --source=$INSTALLDIR --rcfile=../.coveragerc $(which nosetests) --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
+  #- nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_incremental_ls
 notifications:
   email:
     - njs@pobox.com
