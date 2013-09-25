@@ -16,14 +16,18 @@ script:
   # of the package inside the source directory.
   - export PYRERP_TEST_DATA=$PWD/test-data
   - mkdir empty
+  - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || echo a
   - cd empty
+  - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo b
   - INSTALLDIR=$(python -c "import os; import pyrerp; print(os.path.dirname(pyrerp.__file__))")
+  - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo c
   - export PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1
+  - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo d
   - echo $INSTALLDIR
-  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo || true
-  - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || true
+  - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo || echo e
+  - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo f
   - cd ..
-  - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
+  - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || echo g
 notifications:
   email:
     - njs@pobox.com
