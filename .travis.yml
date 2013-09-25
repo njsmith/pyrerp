@@ -12,16 +12,21 @@ install:
 script:
   - python test-script.py
   - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
+  - PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1 nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
   # We change directories to make sure that python won't find the copy
   # of the package inside the source directory.
   - export PYRERP_TEST_DATA=$PWD/test-data
   - mkdir empty
+  - python test-script.py
   - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || echo a
   - cd empty
+  - python test-script.py
   - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo b
   - INSTALLDIR=$(python -c "import os; import pyrerp; print(os.path.dirname(pyrerp.__file__))")
+  - python test-script.py
   - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo c
   - export PYTHONWARNINGS=default PYRERP_FORCE_NO_WARNINGS=1
+  - python test-script.py
   - nosetests --exe --failure-detail --all-modules ../pyrerp/incremental_ls.py:test_foo || echo d
   - echo $INSTALLDIR
   - nosetests --exe --failure-detail --all-modules $INSTALLDIR/incremental_ls.py:test_foo || echo e
