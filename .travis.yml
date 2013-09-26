@@ -1,8 +1,5 @@
 language: python
 python:
-  # We rely on the Ubuntu python-scipy package, and that's only
-  # available for python 2.7 (and 3.something, but pyrerp doesn't
-  # support py3 yet)
   - 2.7
 before_install:
   - sudo apt-get -qq build-dep python-scipy
@@ -12,11 +9,12 @@ install:
 script:
   - python test-script.py || true
   - python test-script2.py || true
-  - nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
-  - PYRERP_FORCE_NO_WARNINGS=1 nosetests --exe --failure-detail --all-modules pyrerp/incremental_ls.py:test_foo || true
-  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.incremental_ls; pyrerp.incremental_ls.test_foo()' || true
-  - PYRERP_FORCE_NO_WARNINGS=1 nosetests --exe --failure-detail --all-modules pyrerp/test_foo.py:test_foo || true
   - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_foo; pyrerp.test_foo.test_foo()' || true
+  - python -c 'import pyrerp.test_foo; pyrerp.test_foo.test_foo()' || true
+  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_bar' || true
+  - python -c 'import pyrerp.test_bar' || true
+  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_baz' || true
+  - python -c 'import pyrerp.test_baz' || true
 notifications:
   email:
     - njs@pobox.com
