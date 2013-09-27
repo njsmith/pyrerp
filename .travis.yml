@@ -9,12 +9,10 @@ install:
 script:
   - python test-script.py || true
   - python test-script2.py || true
-  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_foo; pyrerp.test_foo.test_foo()' || true
   - python -c 'import pyrerp.test_foo; pyrerp.test_foo.test_foo()' || true
-  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_bar' || true
   - python -c 'import pyrerp.test_bar' || true
-  - PYRERP_FORCE_NO_WARNINGS=1 python -c 'import pyrerp.test_baz' || true
-  - python -c 'import pyrerp.test_baz' || true
+  - python -c 'import pyrerp' || true
+  - python -c 'import testmod' || true
 notifications:
   email:
     - njs@pobox.com
